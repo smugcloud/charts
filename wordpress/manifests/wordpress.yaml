@@ -15,14 +15,4 @@ spec:
       ports:
         - containerPort: 80
           name: wordpress
-      volumeMounts:
-          # name must match the volume name below
-        - name: wordpress-persistent-storage
-          # mount path within the container
-          mountPath: /var/www/html
-  volumes:
-    - name: wordpress-persistent-storage
-      gcePersistentDisk:
-        # This GCE PD must already exist.
-        pdName: wordpress-disk
-        fsType: ext4
+
