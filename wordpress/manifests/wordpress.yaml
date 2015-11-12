@@ -3,16 +3,25 @@ kind: Pod
 metadata:
   name: wordpress
   labels:
-    name: wordpress
+    provider: wordpress
 spec:
   containers:
     - image: wordpress
       name: wordpress
       env:
+        - name: WORDPRESS_ROOT_PASSWORD
+          # Change this - must match the password defined as part of MySQL
+          value: supersecretpassword
         - name: WORDPRESS_DB_PASSWORD
-          # change this - must match mysql.yaml password
-          value: yourpassword
+          value: supersecretpassword
+        - name: WORDPRESS_DB_HOST
+          value: wordpress-mysql
       ports:
         - containerPort: 80
-          name: wordpress
-
+      volumeMounts:
+          # Name must match the volume name below.
+        - name: wordpress-persistent-storage
+          # Mount path within the container.
+          mountPath: /var/www/html
+  volumes:
+    - name: wordpress-persistent-storage
